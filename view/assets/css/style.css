@@ -1,0 +1,333 @@
+:root {
+    /* BatPay Brand Colors */
+    --bp-purple-dark: #2A0539;
+    --bp-purple-gray: #423C59;
+    --bp-gray-purple: #5C576E;
+    --bp-yellow: #FFFF37;
+    --bp-pink: #FFADB6;
+
+    /* Bootstrap overrides */
+    --bs-primary: var(--bp-purple-dark);
+    --bs-primary-rgb: 42, 5, 57;
+
+    --bs-secondary: var(--bp-gray-purple);
+    --bs-secondary-rgb: 92, 87, 110;
+
+    --bs-warning: var(--bp-yellow);
+    --bs-info: var(--bp-pink);
+
+    --bs-body-bg: #F8F9FA;
+    --bs-body-color: #2D3748;
+
+    --bs-font-sans-serif: 'Inter', sans-serif;
+}
+
+body {
+    font-family: var(--bs-font-sans-serif);
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+}
+
+/* Typography & Brand */
+.brand-text-dark {
+    color: var(--bp-purple-dark);
+}
+
+.brand-text-yellow {
+    color: var(--bp-yellow);
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    /* Since yellow is bright, it might need contrast on light bg, or we use a darker yellow for text */
+}
+
+/* Custom Buttons */
+.btn-primary {
+    background-color: var(--bp-purple-dark);
+    border-color: var(--bp-purple-dark);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--bp-purple-gray);
+    border-color: var(--bp-purple-gray);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(42, 5, 57, 0.2);
+}
+.nav-link{
+    color: black;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+.nav-link:hover {
+    background-color: var(--bp-purple-dark);
+    border-color: var(--bp-purple-gray);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(42, 5, 57, 0.2);
+    
+}
+
+.btn-warning {
+    background-color: var(--bp-yellow);
+    border-color: var(--bp-yellow);
+    color: var(--bp-purple-dark);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    background-color: #f0f025;
+    border-color: #f0f025;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 255, 55, 0.3);
+}
+
+.btn-outline-primary {
+    color: var(--bp-purple-dark);
+    border-color: var(--bp-purple-dark);
+    font-weight: 600;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--bp-purple-dark);
+    color: #fff;
+}
+
+/* Cards & Containers */
+.card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Utilities */
+.rounded-xl {
+    border-radius: 1rem !important;
+}
+
+.rounded-2xl {
+    border-radius: 1.5rem !important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.text-xs {
+    font-size: 0.75rem;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+/* Dashboard Sidebar */
+#wrapper {
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    width: 260px;
+    margin-left: -260px;
+    transition: margin 0.3s ease-out;
+    background-color: #fff;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+@media (min-width: 992px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -260px;
+    }
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+    transition: margin 0.3s ease-out;
+    background-color: var(--bs-body-bg);
+}
+
+@media (min-width: 992px) {
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+.sidebar-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    color: var(--bp-gray-purple);
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    border-radius: 0.5rem;
+    margin: 0.2rem 1rem;
+}
+
+.sidebar-nav-link i {
+    font-size: 1.25rem;
+    margin-right: 0.75rem;
+}
+
+.sidebar-nav-link:hover,
+.sidebar-nav-link.active {
+    background-color: rgba(42, 5, 57, 0.05);
+    color: var(--bp-purple-dark);
+}
+
+.sidebar-nav-link.active {
+    background-color: var(--bp-purple-dark);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(42, 5, 57, 0.2);
+}
+
+/* Landing Page specific */
+.landing-navbar {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.hero-bg {
+    background: linear-gradient(145deg, #F8F9FA 0%, #E9ECEF 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-bg::after {
+    content: '';
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(255, 173, 182, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    top: -200px;
+    right: -200px;
+    z-index: 0;
+}
+
+.hero-bg::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(42, 5, 57, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    bottom: -100px;
+    left: -100px;
+    z-index: 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Tables */
+.table {
+    vertical-align: middle;
+}
+
+.table thead th {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--bp-gray-purple);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+}
+
+.table tbody td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+/* Bat Logo simulation */
+.bat-logo-text {
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.bat-logo-text .bat {
+    color: var(--bp-purple-dark);
+}
+
+.bat-logo-text .pay {
+    color: #d6d600;
+    /* Darker yellow for text legibility */
+}
+
+/* Badges */
+.badge-soft-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.badge-soft-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+.badge-soft-danger {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+/* Login / Register */
+.auth-bg {
+    background-color: var(--bp-purple-dark);
+    background-image: radial-gradient(circle at 100% 0%, var(--bp-purple-gray) 0%, transparent 50%),
+        radial-gradient(circle at 0% 100%, var(--bp-gray-purple) 0%, transparent 50%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.auth-card {
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.auth-sidebar {
+    background-color: var(--bp-purple-dark);
+    color: #fff;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
