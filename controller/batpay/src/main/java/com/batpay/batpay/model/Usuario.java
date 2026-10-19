@@ -3,6 +3,7 @@ package com.batpay.batpay.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Usuario {
@@ -18,14 +19,18 @@ public class Usuario {
     @Column(name = "data_cadastro", updatable = false)
     private LocalDateTime dataCadastro;
 
+
     public Usuario() {
     }
 
-    public Usuario(String nome, String email, String senha) {
+    public Usuario(String nome, String email, String senha, LocalDateTime dataCadastro) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.dataCadastro = dataCadastro;
     }
+
+
 
     @PrePersist
     public void prePersist(){
