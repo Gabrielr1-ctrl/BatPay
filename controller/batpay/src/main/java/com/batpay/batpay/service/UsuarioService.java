@@ -3,6 +3,7 @@ package com.batpay.batpay.service;
 import com.batpay.batpay.dto.UsuarioResponseDTO;
 import com.batpay.batpay.model.Usuario;
 import com.batpay.batpay.repository.UsuarioRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class UsuarioService {
     }
 
     public List<UsuarioResponseDTO> listarUsuarios(){
-        List<Usuario> aux = new ArrayList<>(usuarioRepository.findAll());
+        List<Usuario> aux = usuarioRepository.findAll();
         List<UsuarioResponseDTO> usuariosRetornaveis = new ArrayList<>();
 
         for (Usuario usuario : aux) {
@@ -43,6 +44,51 @@ public class UsuarioService {
         return usuariosRetornaveis;
     }
 
-    public Optional<Usuario> buscarUsuarioId(Long id){return usuarioRepository.findById(id);}
+
+    public Optional<UsuarioResponseDTO> buscarUsuarioPorId(Long id) {
+        return usuarioRepository.findById(id)
+                .map(usuario -> new UsuarioResponseDTO(
+                        usuario.getId(),
+                        usuario.getNome(),
+                        usuario.getEmail(),
+                        usuario.getDataCadastro()
+                ));
+    }
+
+    public boolean verificarUsuarioValido(Long id){
+        return usuarioRepository.findById(id)
+                .map(usuario -> true).orElse(false);
+    }
+
+    public boolean verificarSenha(Long id, String senhaDigitada){
+        Optional<Usuario> usuarioArmazenado = usuarioRepository.findById(id);
+        return verificarUsuarioValido(usuarioArmazenado.get().getId()) && passwordEncoder.matches(senhaDigitada, usuarioArmazenado.get().getSenha());
+    }
+
+    public UsuarioResponseDTO transformaUsuarioEmUsuarioResponseDTO( Usuario usuario){
+        return new UsuarioResponseDTO(
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail(),
+                usuario.getDataCadastro()
+        );
+
+    }
+
+    public Optional<UsuarioResponseDTO> atualizaUsuario(Long id, Usuario usuarioAtualizado){
+         Optional<Usuario> usuarioDesatualizado = usuarioRepository.findById(id);
+         usuarioDesatualizado.map(usuario -> {
+             usuario.setNome(usuarioAtualizado.getNome());
+             usuario.setEmail(usuarioAtualizado.getEmail());
+             usuario.setSenha(usuarioAtualizado.getSenha());
+             return transformaUsuarioEmUsuarioResponseDTO(usuario);
+         });
+
+         return Optional.empty();
+
+    }
+
+
+
 
 }
