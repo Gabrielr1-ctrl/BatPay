@@ -6,12 +6,8 @@ public record UsuarioResponseDTO(
         Long id,
         String nome,
         String email,
+        String telefone,
+        String cnpj,
+        String empresa,
         LocalDateTime dataCadastro
-) {
-    public UsuarioResponseDTO(Long id, String nome, String email, LocalDateTime dataCadastro) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.dataCadastro = dataCadastro;
-    }
-}
+) {}
