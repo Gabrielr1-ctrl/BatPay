@@ -1,8 +1,10 @@
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_HOST = window.location.hostname === '127.0.0.1' ? '127.0.0.1' : 'localhost';
+const API_BASE_URL = `http://${API_HOST}:8080/api`;
 
 async function apiRequest(endpoint, method = 'GET', body = null) {
     const options = {
         method,
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
     };
     if (body) options.body = JSON.stringify(body);
@@ -11,6 +13,10 @@ async function apiRequest(endpoint, method = 'GET', body = null) {
     
     if (!response.ok) {
         const errorText = await response.text();
+        if (response.status === 401 && endpoint !== '/usuarios/login' && endpoint !== '/usuarios/logout') {
+            localStorage.removeItem('batpay_user');
+            window.location.href = 'login.html';
+        }
         throw new Error(errorText || `Erro ${response.status}`);
     }
     
@@ -34,9 +40,13 @@ function requireAuth() {
     return user;
 }
 
-function logout() {
-    localStorage.removeItem('batpay_user');
-    window.location.href = 'login.html';
+async function logout() {
+    try {
+        await apiRequest('/usuarios/logout', 'POST');
+    } finally {
+        localStorage.removeItem('batpay_user');
+        window.location.href = 'login.html';
+    }
 }
 
 function showToast(message, type = 'success') {

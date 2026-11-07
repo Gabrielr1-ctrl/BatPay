@@ -1,19 +1,33 @@
 package com.batpay.batpay.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Table(name = "cobrancas")
 public class Cobranca {
 
+    public static LocalDate hoje() {
+        return LocalDate.now(ZoneId.of("America/Sao_Paulo"));
+    }
+
+    public StatusCobranca statusEm(LocalDate data) {
+        if (status == StatusCobranca.PENDENTE && dataVencimento.isBefore(data)) {
+            return StatusCobranca.VENCIDO;
+        }
+        return status;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
@@ -30,6 +44,7 @@ public class Cobranca {
     private String metodoPagamento;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(nullable = false)
     private StatusCobranca status;
 

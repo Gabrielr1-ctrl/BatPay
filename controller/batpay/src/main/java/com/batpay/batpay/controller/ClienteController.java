@@ -1,14 +1,15 @@
 package com.batpay.batpay.controller;
 
+import com.batpay.batpay.dto.ClienteRequestDTO;
 import com.batpay.batpay.model.Cliente;
 import com.batpay.batpay.service.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
 @RequestMapping("/clientes")
 @RestController
 public class ClienteController {
@@ -24,7 +25,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente novoCliente) {
+    public ResponseEntity<Cliente> criarCliente(@Valid @RequestBody ClienteRequestDTO novoCliente) {
         Cliente clienteSalvo = clienteService.salvarCliente(novoCliente);
         return new ResponseEntity<>(clienteSalvo, HttpStatus.CREATED);
     }
@@ -37,7 +38,8 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteAtualizado) {
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id,
+                                                     @Valid @RequestBody ClienteRequestDTO clienteAtualizado) {
         return clienteService.atualizarCliente(id, clienteAtualizado)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

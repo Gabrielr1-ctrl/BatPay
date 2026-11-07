@@ -43,6 +43,8 @@ function getStatusBadge(status) {
     switch (s) {
         case 'PAGO':
             return '<span class="badge bg-success">Pago</span>';
+        case 'ESTORNADO':
+            return '<span class="badge bg-secondary">Estornado</span>';
         case 'VENCIDO':
             return '<span class="badge bg-danger">Vencido</span>';
         case 'CANCELADO':
