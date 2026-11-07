@@ -1,4 +1,6 @@
 package com.batpay.batpay.dto;
 
-public record LoginRequestDTO(String email, String senha) {
+import jakarta.validation.constraints.*;
+
+public record LoginRequestDTO(@NotBlank @Email @Size(max = 150) String email, @NotBlank String senha) {
 }
