@@ -1,3 +1,5 @@
 package com.batpay.batpay.dto;
 
-public record AtualizarSenhaDTO(String senhaAtual, String novaSenha) {}
+import jakarta.validation.constraints.NotBlank;
+
+public record AtualizarSenhaDTO(@NotBlank String senhaAtual, @NotBlank String novaSenha) {}

@@ -2,8 +2,8 @@ package com.batpay.batpay.controller;
 
 import com.batpay.batpay.dto.CobrancaRequestDTO;
 import com.batpay.batpay.dto.CobrancaResponseDTO;
-import com.batpay.batpay.model.StatusCobranca;
 import com.batpay.batpay.service.CobrancaService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cobrancas")
-@CrossOrigin("*")
 public class CobrancaController {
 
     private final CobrancaService cobrancaService;
@@ -23,11 +22,7 @@ public class CobrancaController {
 
     @GetMapping
     public List<CobrancaResponseDTO> listar(@RequestParam(required = false) String status) {
-        if (status != null && !status.isEmpty()) {
-            StatusCobranca s = StatusCobranca.valueOf(status.toUpperCase());
-            return cobrancaService.listarPorStatus(s);
-        }
-        return cobrancaService.listarCobrancas();
+        return cobrancaService.listarCobrancas(status);
     }
 
     @GetMapping("/{id}")
@@ -38,20 +33,19 @@ public class CobrancaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> criar(@RequestBody CobrancaRequestDTO dto) {
-        try {
-            CobrancaResponseDTO cobrancaCriada = cobrancaService.criarCobranca(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(cobrancaCriada);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    public CobrancaResponseDTO criar(@Valid @RequestBody CobrancaRequestDTO dto) {
+        return cobrancaService.criarCobranca(dto);
+    }
+
+    @PostMapping("/{id}/cancelamento")
+    public CobrancaResponseDTO cancelar(@PathVariable Long id) {
+        return cobrancaService.cancelar(id);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        if (cobrancaService.deletarCobranca(id)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        cobrancaService.deletarCobranca(id);
+        return ResponseEntity.noContent().build();
     }
 }
